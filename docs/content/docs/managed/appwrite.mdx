@@ -1,0 +1,46 @@
+---
+title: "Managed: Appwrite"
+description: Deploy Hot Updater update API and secure bundle downloads on Appwrite Cloud."
+icon: appwrite
+---
+
+## Overview
+
+This guide sets up an Appwrite Function as the Hot Updater update API and a private Storage bucket for bundle downloads.
+
+## Prerequisites
+
+- Appwrite Cloud project (`APPWRITE_PROJECT_ID`)
+- API key with Databases and Storage permissions
+
+## Steps
+
+1. Create resources:
+   - Database ID: `APPWRITE_DATABASE_ID`
+   - Collections:
+     - `bundles`
+     - `target_app_versions`
+   - Storage bucket: `APPWRITE_BUCKET_ID` (private)
+
+2. Deploy Function
+   - Entry: `@hot-updater/appwrite/functions`
+   - Runtime: Node.js 18+
+   - Expose the Function via Function URL or Sites
+   - Environment variables:
+     - `APPWRITE_ENDPOINT`, `APPWRITE_PROJECT_ID`, `APPWRITE_API_KEY`
+     - `APPWRITE_DATABASE_ID`, `APPWRITE_BUNDLES_COLLECTION_ID`
+     - `APPWRITE_TARGET_VERSIONS_COLLECTION_ID`
+     - `FUNCTION_JWT_SECRET` (long random string)
+
+3. Client configuration
+   - Set `APPWRITE_FUNCTION_BASE_URL` to the Function base URL
+   - Use `getUpdateSource(functionBaseUrl + "/api/check-update")` in your app, or configure the server with `appwriteStorage` so it can generate signed download URLs.
+
+## Headers for /api/check-update
+
+- `x-app-platform`: `ios` or `android`
+- `x-bundle-id`: current bundle id or NIL UUID
+- One of: `x-app-version` or `x-fingerprint-hash`
+- Optional: `x-min-bundle-id`, `x-channel`
+
+

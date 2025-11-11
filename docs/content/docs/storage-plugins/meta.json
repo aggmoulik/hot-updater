@@ -2,5 +2,5 @@
   "title": "Storage Plugins",
   "description": "Storage provider plugins",
   "icon": "Database",
-  "pages": ["supabase", "cloudflare", "firebase", "aws", "custom-storage"]
+  "pages": ["supabase", "cloudflare", "firebase", "aws", "appwrite", "custom-storage"]
 }

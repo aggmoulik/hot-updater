@@ -1,0 +1,59 @@
+# @hot-updater/appwrite
+
+Appwrite provider for Hot Updater. Provides:
+
+- `appwriteStorage` for private Appwrite Storage buckets
+- `appwriteDatabase` for Appwrite Databases
+- An Appwrite Function that serves the update API and short‑lived bundle URLs
+
+## Quick start
+
+1. Install
+
+```bash
+pnpm add -D @hot-updater/appwrite
+```
+
+2. Add configuration
+
+```ts
+// hot-updater.config.ts
+import { defineConfig } from "hot-updater";
+import { appwriteStorage, appwriteDatabase } from "@hot-updater/appwrite";
+
+export default defineConfig({
+  storage: appwriteStorage({
+    endpoint: process.env.APPWRITE_ENDPOINT!,
+    projectId: process.env.APPWRITE_PROJECT_ID!,
+    apiKey: process.env.APPWRITE_API_KEY!,
+    bucketId: process.env.APPWRITE_BUCKET_ID!,
+    functionBaseUrl: process.env.APPWRITE_FUNCTION_BASE_URL!,
+    functionJwtSecret: process.env.APPWRITE_FUNCTION_JWT_SECRET!,
+  }),
+  database: appwriteDatabase({
+    endpoint: process.env.APPWRITE_ENDPOINT!,
+    projectId: process.env.APPWRITE_PROJECT_ID!,
+    apiKey: process.env.APPWRITE_API_KEY!,
+    databaseId: process.env.APPWRITE_DATABASE_ID!,
+    bundlesCollectionId: process.env.APPWRITE_BUNDLES_COLLECTION_ID!,
+    targetVersionsCollectionId:
+      process.env.APPWRITE_TARGET_VERSIONS_COLLECTION_ID!,
+  }),
+});
+```
+
+3. Environment variables
+
+```
+APPWRITE_ENDPOINT=https://cloud.appwrite.io/v1
+APPWRITE_PROJECT_ID=your-project-id
+APPWRITE_API_KEY=your-api-key
+APPWRITE_DATABASE_ID=hot-updater
+APPWRITE_BUNDLES_COLLECTION_ID=bundles
+APPWRITE_TARGET_VERSIONS_COLLECTION_ID=target_app_versions
+APPWRITE_BUCKET_ID=hot-updater-bundles
+APPWRITE_FUNCTION_BASE_URL=https://your-appwrite-function-url
+APPWRITE_FUNCTION_JWT_SECRET=replace-with-long-random-secret
+```
+
+

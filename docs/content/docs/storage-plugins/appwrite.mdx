@@ -1,0 +1,62 @@
+---
+title: "Appwrite Storage"
+description: Store your Hot Updater bundles in a private Appwrite Storage bucket.
+icon: appwrite
+---
+
+## Installation
+
+```package-install
+npm install @hot-updater/appwrite --save-dev
+```
+
+## Setup
+
+Use the init command to scaffold config and env variables:
+
+```package-install
+npx hot-updater init
+```
+
+Choose Appwrite as the provider. The command creates `.env.hotupdater` placeholders and a `hot-updater.config.ts`.
+
+## Configuration
+
+```typescript
+interface AppwriteStorageConfig {
+  endpoint: string;            // https://cloud.appwrite.io/v1
+  projectId: string;           // Project ID
+  apiKey: string;              // API key with Storage write
+  bucketId: string;            // Private bucket
+  basePath?: string;           // Optional bundle prefix
+  functionBaseUrl: string;     // Appwrite Function public URL
+  functionJwtSecret: string;   // Shared secret with Function
+}
+```
+
+## Usage
+
+```typescript
+import { appwriteStorage } from '@hot-updater/appwrite';
+import { defineConfig } from 'hot-updater';
+
+export default defineConfig({
+  storage: appwriteStorage({
+    endpoint: process.env.APPWRITE_ENDPOINT!,
+    projectId: process.env.APPWRITE_PROJECT_ID!,
+    apiKey: process.env.APPWRITE_API_KEY!,
+    bucketId: process.env.APPWRITE_BUCKET_ID!,
+    functionBaseUrl: process.env.APPWRITE_FUNCTION_BASE_URL!,
+    functionJwtSecret: process.env.APPWRITE_FUNCTION_JWT_SECRET!,
+  }),
+  // ... other config
+});
+```
+
+## Protocol
+
+`appwrite-storage://`
+
+This prefix is stored in the `storageUri` field and resolved to a short‑lived download URL via your Appwrite Function.
+
+

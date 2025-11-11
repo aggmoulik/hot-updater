@@ -1,0 +1,54 @@
+{
+  "name": "@hot-updater/appwrite",
+  "type": "module",
+  "version": "0.0.0",
+  "description": "Appwrite provider for Hot Updater (storage + database + function)",
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./functions": {
+      "require": "./dist/functions/update-server/index.cjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "license": "MIT",
+  "repository": "https://github.com/gronxb/hot-updater",
+  "author": "gronxb <gron1gh1@gmail.com> (https://github.com/gronxb)",
+  "bugs": {
+    "url": "https://github.com/gronxb/hot-updater/issues"
+  },
+  "homepage": "https://github.com/gronxb/hot-updater#readme",
+  "files": [
+    "dist",
+    "package.json"
+  ],
+  "scripts": {
+    "build": "tsdown",
+    "test:type": "tsc --noEmit",
+    "test": "vitest",
+    "test:run": "vitest run"
+  },
+  "dependencies": {
+    "@hot-updater/core": "workspace:*",
+    "@hot-updater/plugin-core": "workspace:*",
+    "@hot-updater/cli-tools": "workspace:*",
+    "jose": "^5.9.6",
+    "node-appwrite": "^14.0.0"
+  },
+  "devDependencies": {
+    "@hot-updater/js": "workspace:*",
+    "@hot-updater/test-utils": "workspace:*",
+    "@types/node": "catalog:"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
+
+

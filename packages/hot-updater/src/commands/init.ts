@@ -16,6 +16,10 @@ const PACKAGE_MAP = {
     dependencies: [],
     devDependencies: ["@hot-updater/supabase"],
   },
+  appwrite: {
+    dependencies: [],
+    devDependencies: ["@hot-updater/appwrite"],
+  },
   aws: {
     dependencies: [],
     devDependencies: ["@hot-updater/aws"],
@@ -77,6 +81,7 @@ export const init = async () => {
     message: "Select a provider",
     options: [
       { value: "supabase", label: "Supabase" },
+      { value: "appwrite", label: "Appwrite (Databases + Storage + Function)" },
       {
         value: "cloudflare",
         label: "Cloudflare D1 + R2 + Worker",
@@ -123,6 +128,11 @@ export const init = async () => {
     case "cloudflare": {
       const cloudflare = await import("@hot-updater/cloudflare/iac");
       await cloudflare.runInit({ build });
+      break;
+    }
+    case "appwrite": {
+      const appwrite = await import("@hot-updater/appwrite/iac");
+      await appwrite.runInit({ build });
       break;
     }
     case "aws": {

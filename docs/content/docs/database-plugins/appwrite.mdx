@@ -1,0 +1,70 @@
+---
+title: "Appwrite Database"
+description: Store Hot Updater bundle metadata in Appwrite Databases.
+icon: appwrite
+---
+
+## Installation
+
+```package-install
+npm install @hot-updater/appwrite --save-dev
+```
+
+## Setup
+
+Use the init command:
+
+```package-install
+npx hot-updater init
+```
+
+Choose Appwrite and follow prompts. Then create:
+
+- Database: `APPWRITE_DATABASE_ID`
+- Collections:
+  - `bundles`
+  - `target_app_versions`
+- Private Storage bucket: `APPWRITE_BUCKET_ID`
+
+## Configuration
+
+```typescript
+interface AppwriteDatabaseConfig {
+  endpoint: string;             // https://cloud.appwrite.io/v1
+  projectId: string;            // Project ID
+  apiKey: string;               // API key with Databases R/W
+  databaseId: string;           // Database ID
+  bundlesCollectionId: string;  // Bundles collection ID
+  targetVersionsCollectionId: string; // Target app versions collection ID
+}
+```
+
+## Usage
+
+```typescript
+import { appwriteDatabase } from '@hot-updater/appwrite';
+import { defineConfig } from 'hot-updater';
+
+export default defineConfig({
+  database: appwriteDatabase({
+    endpoint: process.env.APPWRITE_ENDPOINT!,
+    projectId: process.env.APPWRITE_PROJECT_ID!,
+    apiKey: process.env.APPWRITE_API_KEY!,
+    databaseId: process.env.APPWRITE_DATABASE_ID!,
+    bundlesCollectionId: process.env.APPWRITE_BUNDLES_COLLECTION_ID!,
+    targetVersionsCollectionId: process.env.APPWRITE_TARGET_VERSIONS_COLLECTION_ID!,
+  }),
+});
+```
+
+## Fields
+
+The `bundles` documents should include:
+
+- `id`, `platform`, `should_force_update`, `enabled`, `file_hash`, `git_commit_hash`, `message`, `channel`, `storage_uri`, `target_app_version`, `fingerprint_hash`, `metadata`.
+
+The `target_app_versions` documents should include:
+
+- `platform`, `channel`, `target_app_version` with document ID like `<platform>:<channel>:<target_app_version>`.
+
+
