@@ -4,7 +4,9 @@ Appwrite provider for Hot Updater. Provides:
 
 - `appwriteStorage` for private Appwrite Storage buckets
 - `appwriteDatabase` for Appwrite Databases
-- An Appwrite Function that serves the update API and short‑lived bundle URLs
+- Two Appwrite Functions:
+  - `check-update` serves the update API
+  - `bundle` serves short‑lived bundle downloads
 
 ## Quick start
 
@@ -27,7 +29,7 @@ export default defineConfig({
     projectId: process.env.APPWRITE_PROJECT_ID!,
     apiKey: process.env.APPWRITE_API_KEY!,
     bucketId: process.env.APPWRITE_BUCKET_ID!,
-    functionBaseUrl: process.env.APPWRITE_FUNCTION_BASE_URL!,
+    bundleFunctionBaseUrl: process.env.APPWRITE_BUNDLE_FUNCTION_BASE_URL!,
     functionJwtSecret: process.env.APPWRITE_FUNCTION_JWT_SECRET!,
   }),
   database: appwriteDatabase({
@@ -52,8 +54,16 @@ APPWRITE_DATABASE_ID=hot-updater
 APPWRITE_BUNDLES_COLLECTION_ID=bundles
 APPWRITE_TARGET_VERSIONS_COLLECTION_ID=target_app_versions
 APPWRITE_BUCKET_ID=hot-updater-bundles
-APPWRITE_FUNCTION_BASE_URL=https://your-appwrite-function-url
+APPWRITE_BUNDLE_FUNCTION_BASE_URL=https://your-appwrite-bundle-function-url
 APPWRITE_FUNCTION_JWT_SECRET=replace-with-long-random-secret
 ```
+
+4. Functions
+
+- Deploy two HTTP Appwrite Functions:
+  - Check API entry: `@hot-updater/appwrite/functions/check-update`
+  - Bundle entry: `@hot-updater/appwrite/functions/bundle`
+- The client app should call the Check API endpoint at `GET /api/check-update`
+- The Check function returns a signed `fileUrl` pointing to the Bundle function
 
 

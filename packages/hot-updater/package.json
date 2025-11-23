@@ -84,6 +84,7 @@
     "@hot-updater/firebase": "workspace:*",
     "@hot-updater/supabase": "workspace:*",
     "@hot-updater/test-utils": "workspace:*",
+    "@hot-updater/appwrite": "workspace:*",
     "@types/babel__core": "7.20.5",
     "@types/babel__generator": "7.6.8",
     "@types/babel__traverse": "7.20.6",
@@ -104,9 +105,13 @@
     "@hot-updater/aws": "*",
     "@hot-updater/cloudflare": "*",
     "@hot-updater/firebase": "*",
-    "@hot-updater/supabase": "*"
+    "@hot-updater/supabase": "*",
+    "@hot-updater/appwrite": "*"
   },
   "peerDependenciesMeta": {
+    "@hot-updater/appwrite": {
+      "optional": true
+    },
     "@hot-updater/supabase": {
       "optional": true
     },

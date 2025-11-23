@@ -4,11 +4,11 @@ import {
   parseStorageUri,
   type StoragePlugin,
   type StoragePluginHooks,
-  getContentType,
 } from "@hot-updater/plugin-core";
 import fs from "fs/promises";
 import { SignJWT } from "jose";
-import { Client, InputFile, Storage } from "node-appwrite";
+import { Client, Storage } from "node-appwrite";
+import { InputFile } from "node-appwrite/file";
 import path from "path";
 
 export interface AppwriteStorageConfig {
@@ -17,7 +17,7 @@ export interface AppwriteStorageConfig {
   apiKey: string;
   bucketId: string;
   basePath?: string;
-  functionBaseUrl: string;
+  bundleFunctionBaseUrl: string;
   functionJwtSecret: string;
 }
 
@@ -44,15 +44,14 @@ export const appwriteStorage =
       name: "appwriteStorage",
       supportedProtocol: "appwrite-storage",
 
-      async upload(key, filePath) {
+      async upload(key: string, filePath: string) {
         const Body = await fs.readFile(filePath);
-        const ContentType = getContentType(filePath);
         const filename = path.basename(filePath);
         const fileId = getStorageKey(key, filename);
         await storage.createFile(
           config.bucketId,
           fileId,
-          InputFile.fromBuffer(Body, filename, ContentType),
+          InputFile.fromBuffer(Body, filename),
         );
         hooks?.onStorageUploaded?.();
         return {
@@ -60,7 +59,7 @@ export const appwriteStorage =
         };
       },
 
-      async delete(storageUri) {
+      async delete(storageUri: string) {
         const { bucket, key } = parseStorageUri(storageUri, "appwrite-storage");
         if (bucket !== config.bucketId) {
           throw new Error(
@@ -76,7 +75,7 @@ export const appwriteStorage =
           bucketId: bucket,
           fileId: key,
         });
-        const fileUrl = `${config.functionBaseUrl.replace(/\/$/, "")}/bundle/${encodeURIComponent(bucket)}/${encodeURIComponent(key)}?token=${encodeURIComponent(token)}`;
+        const fileUrl = `${config.bundleFunctionBaseUrl.replace(/\/$/, "")}/bundle/${encodeURIComponent(bucket)}/${encodeURIComponent(key)}?token=${encodeURIComponent(token)}`;
         return { fileUrl };
       },
     };

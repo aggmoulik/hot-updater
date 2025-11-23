@@ -1,25 +1,26 @@
 {
   "name": "@hot-updater/appwrite",
   "type": "module",
-  "version": "0.0.0",
+  "version": "0.21.8",
   "description": "Appwrite provider for Hot Updater (storage + database + function)",
   "main": "dist/index.cjs",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
     },
-    "./functions": {
-      "require": "./dist/functions/update-server/index.cjs"
+    "./iac": {
+      "types": "./dist/iac/index.d.ts",
+      "import": "./dist/iac/index.js",
+      "require": "./dist/iac/index.cjs"
     },
     "./package.json": "./package.json"
   },
   "license": "MIT",
   "repository": "https://github.com/gronxb/hot-updater",
-  "author": "gronxb <gron1gh1@gmail.com> (https://github.com/gronxb)",
+  "author": "aggmoulik <qwertymoulik@gmail.com> (https://github.com/aggmoulik)",
   "bugs": {
     "url": "https://github.com/gronxb/hot-updater/issues"
   },

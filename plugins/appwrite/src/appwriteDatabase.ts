@@ -7,7 +7,7 @@ import {
   calculatePagination,
   createDatabasePlugin,
 } from "@hot-updater/plugin-core";
-import { Client, Databases, ID, Query } from "node-appwrite";
+import { Client, Databases, Query } from "node-appwrite";
 
 export interface AppwriteDatabaseConfig {
   endpoint: string;
